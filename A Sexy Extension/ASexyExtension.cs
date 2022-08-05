@@ -13,15 +13,15 @@ namespace ASexyExtension
     {
         public override Scenes BehaviourScenes => Scenes.Mian;
 
-        public override string Id => "我_没_有_名_字.一个迷人的拓展";
+        public override string Id => "我_没_有_名_字.A sexy extension";
 
         public override string Name => "A Sexy Extension";
 
-        public override string Description => "测试用的拓展, 会提供一些SX的实用功能";
+        public override string Description => "暂未完成";
 
         public override string Author => "我_没_有_名_字";
 
-        public override string Version => "0.1.0801a";
+        public override string Version => "0.22.08.05";
 
         public override string Link => "https://space.bilibili.com/401593576";
 

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyExtending", "Sexy Extending\SexyExtending.csproj", "{8435BB13-7693-4D65-9F6F-C68AF23E4567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A Sexy Extension", "A Sexy Extension\A Sexy Extension.csproj", "{F9594944-A8E3-4C7B-91EC-2D0B8A2E4EE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASexyExtension", "A Sexy Extension\ASexyExtension.csproj", "{F9594944-A8E3-4C7B-91EC-2D0B8A2E4EE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyExtending.Common", "SexyExtending.Common\SexyExtending.Common.csproj", "{A2F3F324-85BF-4EFB-A21C-950498C3CBC0}"
 EndProject
