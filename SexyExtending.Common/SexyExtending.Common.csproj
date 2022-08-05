@@ -60,10 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sexy Extending\SexyExtending.csproj">
+    <ProjectReference Include="..\SexyExtending\SexyExtending.csproj">
       <Project>{8435bb13-7693-4d65-9f6f-c68af23e4567}</Project>
       <Name>SexyExtending</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
