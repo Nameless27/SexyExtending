@@ -1,4 +1,5 @@
 ﻿using SexyExtending;
+using SexyExtending.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Drawing = System.Drawing;
 
 namespace ASexyExtension
 {
@@ -27,7 +29,11 @@ namespace ASexyExtension
 
         public override void OnExtensionLoaded()
         {
-
+            GameWindow.Instance.Dwm.SetCornerRadius(WindowsCornerRadius.Zero);
+            GameWindow.Instance.Dwm.SetCaption(Drawing.Color.FromArgb(24, 88, 100));
+            GameWindow.Instance.Dwm.SetBorder(Drawing.Color.FromArgb(249, 166, 71));
+            GameWindow.Instance.Dwm.SetText(Drawing.Color.FromArgb(249, 166, 71));
+            GameWindow.Instance.Dwm.SetGlassFrameThickness(10, 10, 10, 10);
         }
     }
 
