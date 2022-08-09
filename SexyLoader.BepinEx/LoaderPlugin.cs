@@ -4,6 +4,8 @@ using System.Text;
 using BepInEx;
 using UnityEngine;
 using SexyExtending;
+using SexyExtending.Debug;
+using ExConsole = SexyExtending.Debug.Console;
 
 namespace SexyLoader.BepinEx
 {
@@ -18,6 +20,8 @@ namespace SexyLoader.BepinEx
                 var extensions = SexyExtentionLoader.LoadExtensionsFromDirectory(".\\Mods\\", true);
                 ExtensionsManager.Append(extensions);
                 gameWindow = GameWindow.Instance;
+                //ExConsole.ParentPID = GameProcess.Instance.PID;
+                ExConsole.Create();
             }
         }
 
