@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace SexyExtending
+namespace SexyExtending.Modpack
 {
-    public interface IMod
-	{
+    public interface IMap
+    {
 		bool Load();
 
 		bool UnLoad();
@@ -22,15 +22,11 @@ namespace SexyExtending
 
 		string Update(float deltaTime, GameObject player);
 
-		List<string> options { get; }
+		Dictionary<string, Rect> splits { get; }
 
-		int option { get; set; }
+		Dictionary<string, Rect> splitsSideways { get; }
 
-		bool enabled { get; set; }
-
-		string optionsTitle { get; set; }
-
-		bool enableSplits { get; set; }
+		Dictionary<string, SaveState> teleportSaveStates { get; }
 
 		string FixedUpdate(float deltaTime, GameObject player);
 

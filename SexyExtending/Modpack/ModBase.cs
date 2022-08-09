@@ -5,10 +5,20 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace SexyExtending
+namespace SexyExtending.Modpack
 {
     public abstract class ModBase : SexyExtension, IMod
     {
+        public void LoadMod()
+        {
+            enabled = true;
+        }
+
+        public void UnloadMod()
+        {
+            enabled = false;
+        }
+
         #region IMod
         public abstract string name { get; }
 
@@ -55,12 +65,20 @@ namespace SexyExtending
 
         public override void OnSceneChanged(Scene scene)
         {
-            var name = string.Format("{0}({1}).Behaviour", Name, Id);
-            var gameObject = UnityEngine.Object.Instantiate(new GameObject(name));
-            var behaviour = gameObject.AddComponent<ModpackBehaviour>();
-            behaviour.mod = this;
-            BehaviourObject = gameObject;
-            Behaviour = behaviour;
+            if (enabled)
+            {
+                var name = string.Format("{0}({1}).Behaviour", Name, Id);
+                var gameObject = UnityEngine.Object.Instantiate(new GameObject(name));
+                var behaviour = gameObject.AddComponent<ModpackBehaviour>();
+                behaviour.mod = this;
+                BehaviourObject = gameObject;
+                Behaviour = behaviour;
+            }
+            else
+            {
+                UnityEngine.Object.Destroy(Behaviour);
+                UnityEngine.Object.Destroy(BehaviourObject);
+            }
         }
         #endregion
 
