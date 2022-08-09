@@ -46,13 +46,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debug\Console.cs" />
+    <Compile Include="Debug\Debug.cs" />
     <Compile Include="GameCommands.cs" />
     <Compile Include="GameParameters.cs" />
     <Compile Include="ExtensionsManager.cs" />
     <Compile Include="IExtensionInfo.cs" />
-    <Compile Include="IMod.cs" />
-    <Compile Include="ModBase.cs" />
-    <Compile Include="ModpackBehaviour.cs" />
+    <Compile Include="Modpack\IMap.cs" />
+    <Compile Include="Modpack\IMod.cs" />
+    <Compile Include="Modpack\ModBase.cs" />
+    <Compile Include="Modpack\ModpackBehaviour.cs" />
+    <Compile Include="Modpack\ModpackManager.cs" />
+    <Compile Include="SaveState.cs" />
     <Compile Include="Scenes.cs" />
     <Compile Include="SexyExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

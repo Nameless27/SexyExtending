@@ -50,6 +50,11 @@ namespace SexyExtending
         public static IEnumerable<SexyExtension> LoadDirectory(string directory, bool toponly = true)
         {
             var option = toponly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
+            if (!Directory.Exists(directory))
+            {
+                try { Directory.CreateDirectory(directory); }
+                catch (Exception) { yield break; }
+            }
             var files = Directory.GetFiles(directory, "*.dll", option);
             foreach (var file in files)
             {
@@ -74,6 +79,11 @@ namespace SexyExtending
         public static IEnumerable<SexyExtension> LoadExtensionsFromDirectory(string directory, bool toponly = true)
         {
             var option = toponly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
+            if (!Directory.Exists(directory))
+            {
+                try { Directory.CreateDirectory(directory); }
+                catch (Exception) { yield break; }
+            }
             var files = Directory.GetFiles(directory, "*.dll", option);
             foreach (var file in files)
             {
@@ -143,6 +153,10 @@ namespace SexyExtending
             SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
             SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
             var active = SceneManager.GetActiveScene();
+            Debug.Debug.Initialize();
+            isDebugEnabled = PlayerPrefs.GetInt("SX_DEBUG", 0) != 0;
+            if (isDebugEnabled)
+                IsDebugEnabled = true;
             SceneManager_activeSceneChanged(active, active);
         }
 
@@ -177,6 +191,21 @@ namespace SexyExtending
                 extension.OnSceneChanged(arg1);
             }
         }
+
+        private static bool isDebugEnabled;
+
+        public static bool IsDebugEnabled
+        {
+            get => isDebugEnabled;
+            set
+            {
+                isDebugEnabled = value;
+                PlayerPrefs.SetInt("SX_DEBUG", value ? 1 : 0);
+                OnDebugEnableChanged(value);
+            }
+        }
+
+        internal static Action<bool> OnDebugEnableChanged;
         #endregion
     }
 }

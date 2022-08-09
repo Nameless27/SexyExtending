@@ -7,12 +7,12 @@ namespace SexyExtending
 {
     public enum Scenes : int
     {
-        Loader = 0x0, 
+        Loader = 0x1, 
 
-        Credits = 0x1, 
+        Credits = 0x2, 
 
-        Mian = 0x2, 
+        Mian = 0x4, 
 
-        RewardLoader = 0x4, 
+        RewardLoader = 0x8, 
     }
 }
