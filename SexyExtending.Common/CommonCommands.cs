@@ -22,7 +22,7 @@ namespace SexyExtending
                 int num = PlayerPrefs.GetInt("NumWins");
                 PlayerPrefs.SetInt("NumWins", num + 1);
             }
-            Debug.Log("Game Done, deleting saves");
+            UnityEngine.Debug.Log("Game Done, deleting saves");
             PlayerPrefs.Save();
             SceneManager.LoadScene("Reward Loader");
         }
