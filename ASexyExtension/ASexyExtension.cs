@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Drawing = System.Drawing;
+using DebugConsole = SexyExtending.Debug.Console;
 
 namespace ASexyExtension
 {
@@ -34,6 +35,19 @@ namespace ASexyExtension
             GameWindow.Instance.Dwm.SetBorder(Drawing.Color.FromArgb(249, 166, 71));
             GameWindow.Instance.Dwm.SetText(Drawing.Color.FromArgb(249, 166, 71));
             GameWindow.Instance.Dwm.SetGlassFrameThickness(10, 10, 10, 10);
+            GameWindow.Instance.OnLoaded -= Instance_OnLoaded;
+            GameWindow.Instance.OnLoaded += Instance_OnLoaded;
+        }
+
+        private void Instance_OnLoaded()
+        {
+            var writer = new StreamWriter("GameLoaded");
+            writer.WriteLine("GameLoaded");
+            writer.Close();
+            var versionInfo = string.Format("[{0}][{1}]{2}{3} by {4}", DateTime.Now.ToString("T"), Id, Name, Version, Author);
+            var description = string.Format("    {0}", Description);
+            DebugConsole.WriteLine(versionInfo);
+            DebugConsole.WriteLine(description);
         }
     }
 
@@ -46,6 +60,11 @@ namespace ASexyExtension
             {
                 rect.Set(modsManagerX, modsManagerY, modsManagerWidth, modsManagerHeight);
                 var modsManager = GUI.ModalWindow(0, rect, ModsManagerWindow_Function, "Mods");
+            }
+            rect.Set(0f, 100f, 125, 25f);
+            if (GUI.Button(rect, "Close Console"))
+            {
+                DebugConsole.Destory();
             }
         }
 
