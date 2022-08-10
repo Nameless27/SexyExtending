@@ -67,10 +67,13 @@
     <Compile Include="Win32\DWMWINDOWATTRIBUTE.cs" />
     <Compile Include="Win32\DWM_SYSTEMBACKDROP_TYPE.cs" />
     <Compile Include="Win32\MARGINS.cs" />
+    <Compile Include="Win32\POINT.cs" />
     <Compile Include="Win32\RECT.cs" />
+    <Compile Include="Win32\ShowWindowCommands.cs" />
     <Compile Include="Win32\Win32Rect.cs" />
     <Compile Include="Win32\WindowCompositionAttribute.cs" />
     <Compile Include="Win32\WindowCompositionAttributeData.cs" />
+    <Compile Include="Win32\WINDOWPLACEMENT.cs" />
     <Compile Include="Win32\WindowsCornerRadius.cs" />
   </ItemGroup>
   <ItemGroup>

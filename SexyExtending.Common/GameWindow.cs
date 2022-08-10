@@ -25,7 +25,181 @@ namespace SexyExtending
 
         internal IntPtr handle = IntPtr.Zero;
 
+        #region WindowPosition
+        internal int x;
+        internal int minX;
+        internal int maxX;
+        internal int y;
+        internal int minY;
+        internal int maxY;
+        internal int width;
+        internal int height;
 
+        #region Position
+
+        #region Normal
+        public int X
+        {
+            get
+            {
+                WindowPosition.GetNormalPosition(handle, out x, out _);
+                return x;
+            }
+            set
+            {
+                x = value;
+                WindowPosition.SetNormalPosition(handle, x, y);
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                WindowPosition.GetNormalPosition(handle, out _, out y);
+                return y;
+            }
+            set
+            {
+                y = value;
+                WindowPosition.SetNormalPosition(handle, x, y);
+            }
+        }
+        #endregion
+
+        #region Minimized
+        public int MinX
+        {
+            get
+            {
+                WindowPosition.GetNormalPosition(handle, out minX, out _);
+                return minX;
+            }
+            set
+            {
+                minX = value;
+                WindowPosition.SetNormalPosition(handle, minX, minY);
+            }
+        }
+
+        public int MinY
+        {
+            get
+            {
+                WindowPosition.GetNormalPosition(handle, out _, out minY);
+                return minY;
+            }
+            set
+            {
+                minY = value;
+                WindowPosition.SetNormalPosition(handle, minX, minY);
+            }
+        }
+        #endregion
+
+        #region Maximized
+        public int MaxX
+        {
+            get
+            {
+                WindowPosition.GetNormalPosition(handle, out maxX, out _);
+                return maxX;
+            }
+            set
+            {
+                maxX = value;
+                WindowPosition.SetNormalPosition(handle, maxX, maxY);
+            }
+        }
+
+        public int MaxY
+        {
+            get
+            {
+                WindowPosition.GetNormalPosition(handle, out _, out maxY);
+                return maxY;
+            }
+            set
+            {
+                y = value;
+                WindowPosition.SetNormalPosition(handle, maxY, maxY);
+            }
+        }
+        #endregion
+
+        public void GetPosition(out int x, out int y)
+        {
+            WindowPosition.GetRectPosition(handle, out x, out y);
+        }
+
+        public void SetPosition(int x, int y)
+        {
+            WindowPosition.SetNormalPosition(handle, x, y);
+        }
+
+        public void GetMaximizedPosition(out int x, out int y)
+        {
+            WindowPosition.GetMaximizedPosition(handle, out x, out y);
+        }
+
+        public void SetMaximizedPosition(int x, int y)
+        {
+            WindowPosition.SetMaximizedPosition(handle, x, y);
+        }
+
+        public void GetMinimizedPosition(out int x, out int y)
+        {
+            WindowPosition.GetMinimizedPosition(handle, out x, out y);
+        }
+
+        public void SetMinimizedPosition(int x, int y)
+        {
+            WindowPosition.SetMinimizedPosition(handle, x, y);
+        }
+        #endregion
+
+        #region Size
+        public int Width
+        {
+            get
+            {
+                WindowPosition.GetSize(handle, out width, out _);
+                return width;
+            }
+            set
+            {
+                width = value;
+                WindowPosition.SetSize(handle, value, height);
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                WindowPosition.GetSize(handle, out _, out height);
+                return height;
+            }
+            set
+            {
+                height = value;
+                WindowPosition.SetSize(handle, width, value);
+            }
+        }
+
+        public void GetSize(out int width, out int height)
+        {
+            WindowPosition.GetSize(handle, out width, out height);
+        }
+
+        public void SetSize(int width, int height)
+        {
+            WindowPosition.SetSize(handle, width, height);
+        }
+        #endregion
+        #endregion
+
+        #region FindGameWindowProc
         internal bool FindGameWindowProc(IntPtr hWnd, IntPtr lParam)
         {
             GetWindowThreadProcessId(hWnd, out var pid);
@@ -41,6 +215,15 @@ namespace SexyExtending
             }
             return true;
         }
+        #endregion
+
+        #region Event
+        public event Action OnLoaded
+        {
+            add => GameProcess.Instance.onLoaded += value;
+            remove => GameProcess.Instance.onLoaded -= value;
+        }
+        #endregion
 
         public DwmApi Dwm;
 
@@ -59,7 +242,7 @@ namespace SexyExtending
                 margins.rightWidth = value;
                 margins.topHeight = value;
                 margins.bottomHeight = value;
-                DwmExtendFrameIntoClientArea(handle, ref margins);
+                PInvoke.Dwm.DwmExtendFrameIntoClientArea(handle, ref margins);
             }
 
             /// <summary>
@@ -72,7 +255,7 @@ namespace SexyExtending
                 margins.rightWidth = Math.Max(0, right);
                 margins.topHeight = Math.Max(0, top);
                 margins.bottomHeight = Math.Max(0, bottom);
-                DwmExtendFrameIntoClientArea(handle, ref margins);
+                PInvoke.Dwm.DwmExtendFrameIntoClientArea(handle, ref margins);
             }
             #endregion
             #region Windows11 Build 22000
@@ -82,7 +265,7 @@ namespace SexyExtending
             public void SetCornerRadius(WindowsCornerRadius cornerRadius)
             {
                 int attrValue = (int)cornerRadius;
-                DwmSetWindowAttribute(handle, DwmWindowAttribute.WindowCornerPreference, ref attrValue);
+                PInvoke.Dwm.DwmSetWindowAttribute(handle, DwmWindowAttribute.WindowCornerPreference, ref attrValue);
             }
 
             /// <summary>
@@ -91,7 +274,7 @@ namespace SexyExtending
             public void SetBorder(Drawing.Color color)
             {
                 int attrValue = ColorConverter.ToAttributeValue(color);
-                DwmSetWindowAttribute(handle, DwmWindowAttribute.BorderColor, ref attrValue);
+                PInvoke.Dwm.DwmSetWindowAttribute(handle, DwmWindowAttribute.BorderColor, ref attrValue);
             }
 
             /// <summary>
@@ -100,7 +283,7 @@ namespace SexyExtending
             public void SetCaption(Drawing.Color color)
             {
                 int attrValue = ColorConverter.ToAttributeValue(color);
-                DwmSetWindowAttribute(handle, DwmWindowAttribute.CaptionColor, ref attrValue);
+                PInvoke.Dwm.DwmSetWindowAttribute(handle, DwmWindowAttribute.CaptionColor, ref attrValue);
             }
 
             /// <summary>
@@ -109,19 +292,19 @@ namespace SexyExtending
             public void SetText(Drawing.Color color)
             {
                 int attrValue = ColorConverter.ToAttributeValue(color);
-                DwmSetWindowAttribute(handle, DwmWindowAttribute.TextColor, ref attrValue);
+                PInvoke.Dwm.DwmSetWindowAttribute(handle, DwmWindowAttribute.TextColor, ref attrValue);
             }
             #endregion
             #region Windows 11 Build 22621
             public void SetBackdrop(DWM_SYSTEMBACKDROP_TYPE backdrop)
             {
                 int attrValue = (int)backdrop;
-                DwmSetWindowAttribute(handle, DwmWindowAttribute.SystemBackdropType, ref attrValue);
+                PInvoke.Dwm.DwmSetWindowAttribute(handle, DwmWindowAttribute.SystemBackdropType, ref attrValue);
             }
 
             public DWM_SYSTEMBACKDROP_TYPE GetBackdrop()
             {
-                DwmGetWindowAttribute(handle, DwmWindowAttribute.SystemBackdropType, out var attrValue);
+                PInvoke.Dwm.DwmGetWindowAttribute(handle, DwmWindowAttribute.SystemBackdropType, out var attrValue);
                 return (DWM_SYSTEMBACKDROP_TYPE)attrValue;
             }
             #endregion
@@ -143,7 +326,7 @@ namespace SexyExtending
                     SizeOfData = accentSize,
                     Data = accentPointer
                 };
-                SetWindowCompositionAttribute(handle, ref data);
+                PInvoke.Dwm.SetWindowCompositionAttribute(handle, ref data);
                 Marshal.FreeHGlobal(accentPointer);
             }
 
@@ -170,7 +353,7 @@ namespace SexyExtending
                     Data = accentPointer
                 };
 
-                SetWindowCompositionAttribute(handle, ref data);
+                PInvoke.Dwm.SetWindowCompositionAttribute(handle, ref data);
                 Marshal.FreeHGlobal(accentPointer);
             }
         }

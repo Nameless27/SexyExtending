@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace SexyExtending.Win32
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct RECT
+    public struct RECT
     {
         internal static readonly RECT Zero = new RECT(0, 0, 0, 0);
 

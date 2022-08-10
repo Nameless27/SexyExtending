@@ -16,6 +16,19 @@ namespace SexyExtending
             pid = process.Id;
         }
 
+        internal void InvokeOnLoaded()
+        {
+            onLoaded?.Invoke();
+        }
+
+        internal event Action onLoaded;
+
+        public event Action OnLoaded
+        {
+            add => onLoaded += value;
+            remove => onLoaded -= value;
+        }
+
         public static readonly GameProcess Instance = new GameProcess();
 
         internal Process process;
