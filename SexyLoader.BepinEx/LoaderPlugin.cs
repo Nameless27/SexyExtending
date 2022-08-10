@@ -6,6 +6,7 @@ using UnityEngine;
 using SexyExtending;
 using SexyExtending.Debug;
 using ExConsole = SexyExtending.Debug.Console;
+using System.Reflection;
 
 namespace SexyLoader.BepinEx
 {
@@ -25,7 +26,20 @@ namespace SexyLoader.BepinEx
             }
         }
 
+        void Start()
+        {
+            if (!started)
+            {
+                started = true;
+                var type = typeof(GameProcess);
+                var method = type.GetMethod("InvokeOnLoaded", BindingFlags.Instance | BindingFlags.NonPublic);
+                method.Invoke(GameProcess.Instance, null);
+            }
+        }
+
         internal static GameWindow gameWindow;
+
+        internal static bool started;
 
         internal class PluginInfo
         {
@@ -33,7 +47,7 @@ namespace SexyLoader.BepinEx
 
             internal const string Name = "SexyExtending";
 
-            internal const string Version = "0.22.8.9";
+            internal const string Version = "1.22.8.10";
         }
     }
 }
