@@ -197,6 +197,18 @@ namespace SexyExtending
             WindowPosition.SetSize(handle, width, height);
         }
         #endregion
+
+        #region Move
+        public void Move(int x, int y, bool rePaint = false)
+        {
+            WindowPosition.Move(handle, x, y, rePaint);
+        }
+
+        public void Resize(int width, int height, bool rePaint = false)
+        {
+            WindowPosition.Resize(handle, width, height, rePaint);
+        }
+        #endregion
         #endregion
 
         #region FindGameWindowProc

@@ -159,11 +159,11 @@ namespace SexyExtending
         {
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
+            internal static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+            internal static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
@@ -195,6 +195,7 @@ namespace SexyExtending
             #endregion
 
             #endregion
+
             #region Placement
 
             #region Get
@@ -305,6 +306,20 @@ namespace SexyExtending
 
             #endregion
 
+            #endregion
+
+            #region MoveWindow
+            internal static void Move(IntPtr hwnd, int x, int y, bool repaint = false)
+            {
+                GetRectSize(hwnd, out var width, out var height);
+                MoveWindow(hwnd, x, y, width, height, repaint);
+            }
+
+            internal static void Resize(IntPtr hwnd, int width, int height, bool repaint = false)
+            {
+                GetRectPosition(hwnd, out var x, out var y);
+                MoveWindow(hwnd, x, y, width, height, repaint);
+            }
             #endregion
 
             internal const int WPF_ASYNCWINDOWPLACEMENT = 0x0004;
