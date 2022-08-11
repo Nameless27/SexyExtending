@@ -61,10 +61,25 @@ namespace ASexyExtension
                 rect.Set(modsManagerX, modsManagerY, modsManagerWidth, modsManagerHeight);
                 var modsManager = GUI.ModalWindow(0, rect, ModsManagerWindow_Function, "Mods");
             }
-            rect.Set(0f, 100f, 125, 25f);
+            rect.Set(0f, 20f, 125f, 25f);
+            if (GUI.Button(rect, "Create Console"))
+            {
+                DebugConsole.Create();
+            }
+            rect.y += 30f;
             if (GUI.Button(rect, "Close Console"))
             {
                 DebugConsole.Destory();
+            }
+            rect.y += 30f;
+            if (GUI.Button(rect, "Show Console"))
+            {
+                DebugConsole.Show();
+            }
+            rect.y += 30f;
+            if (GUI.Button(rect, "Hide Console"))
+            {
+                DebugConsole.Hide();
             }
         }
 
