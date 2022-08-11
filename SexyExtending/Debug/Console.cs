@@ -12,17 +12,21 @@ namespace SexyExtending.Debug
     {
         public static void Show()
         {
-
+            if (instance == null)
+                return;
+            ShowWindow(instance.hwnd, 5);
         }
 
         public static void Hide()
         {
-
+            if (instance == null)
+                return;
+            ShowWindow(instance.hwnd, 0);
         }
 
         public static void Create()
         {
-            if (Instance != null)
+            if (instance != null)
                 return;
             if (AllocConsole())
             {
@@ -37,7 +41,11 @@ namespace SexyExtending.Debug
 
         public static void Destory()
         {
-            CloseHandle(instance.hwnd);
+            if (instance == null)
+                return;
+            FreeConsole();
+            var handle = new HandleRef(null, instance.hwnd);
+            PostMessage(handle, 0x0010, IntPtr.Zero, IntPtr.Zero);
             instance.Writer.Close();
             instance.stream = null;
             instance = null;
@@ -45,24 +53,24 @@ namespace SexyExtending.Debug
 
         public static void Write(string text)
         {
-            if (instance != null)
-            {
-                ConsoleBase.Write(text);
-                instance.writer.Write(text);
-            }
+            if (instance == null)
+                return;
+            ConsoleBase.Write(text);
+            instance.writer.Write(text);
         }
 
         public static void WriteLine(string text)
         {
-            if (instance != null)
-            {
-                ConsoleBase.WriteLine(text);
-                instance.writer.WriteLine(text);
-            }
+            if (instance == null)
+                return;
+            ConsoleBase.WriteLine(text);
+            instance.writer.WriteLine(text);
         }
 
         public static void SetTitle(string title)
         {
+            if (instance == null)
+                return;
             if (SetConsoleTitle(title))
             {
                 instance.title = title;
@@ -140,6 +148,17 @@ namespace SexyExtending.Debug
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern IntPtr LoadLibraryEx(string lpLibFileName, IntPtr hFile, uint dwFlags);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DestroyWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool PostMessage(HandleRef hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
         #endregion
     }
 }
