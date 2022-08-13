@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using BepInEx;
 using UnityEngine;
 using SexyExtending;
@@ -21,8 +22,12 @@ namespace SexyLoader.BepinEx
                 var extensions = SexyExtentionLoader.LoadExtensionsFromDirectory(".\\Mods\\", true);
                 ExtensionsManager.Append(extensions);
                 gameWindow = GameWindow.Instance;
-                //ExConsole.ParentPID = GameProcess.Instance.PID;
-                ExConsole.Create();
+                var args = Environment.GetCommandLineArgs();
+                var debug = args.Where(a => a.ToLower() == "debug");
+                if (debug.Count() > 0)
+                    SexyExtending.Debug.Debug.IsDebugEnabled = true;
+                else
+                    SexyExtending.Debug.Debug.IsDebugEnabled = false;
             }
         }
 
@@ -47,7 +52,7 @@ namespace SexyLoader.BepinEx
 
             internal const string Name = "SexyExtending";
 
-            internal const string Version = "1.22.8.10";
+            internal const string Version = "1.22.8.11";
         }
     }
 }

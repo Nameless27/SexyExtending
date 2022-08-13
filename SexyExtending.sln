@@ -20,11 +20,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyLauncher", "Install\Sex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyLoader", "Install\SexyExtending\SexyLoader.csproj", "{CAE8A7EE-B53D-4396-9AD5-FFDCAF564438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyLoader.BepinEx", "SexyLoader.BepinEx\SexyLoader.BepinEx.csproj", "{48D26FA1-ADB7-47DA-B1E0-C6A1FF36D53B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SexyLoader.BepinEx", "SexyLoader.BepinEx\SexyLoader.BepinEx.csproj", "{48D26FA1-ADB7-47DA-B1E0-C6A1FF36D53B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{3CFE7DE7-23F4-464B-89CC-8C8A46E84E75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateTimer", "Extensions\DateTimer\DateTimer.csproj", "{3C82CE8D-6AFD-4147-9DE4-6B11BC2F9AC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyExtending.Piper", "SexyExtending.Piper\SexyExtending.Piper.csproj", "{B734B045-DF3E-446E-BC83-4A85976B1AE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,10 @@ Global
 		{3C82CE8D-6AFD-4147-9DE4-6B11BC2F9AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C82CE8D-6AFD-4147-9DE4-6B11BC2F9AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C82CE8D-6AFD-4147-9DE4-6B11BC2F9AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
