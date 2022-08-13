@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Drawing = System.Drawing;
 using DebugConsole = SexyExtending.Debug.Console;
+using SXDebug = SexyExtending.Debug.Debug;
+using UnityEngine.SceneManagement;
+using System.Reflection;
 
 namespace ASexyExtension
 {
@@ -24,7 +27,7 @@ namespace ASexyExtension
 
         public override string Author => "我_没_有_名_字";
 
-        public override string Version => "0.22.08.05";
+        public override string Version => "0.22.08.11";
 
         public override string Link => "https://space.bilibili.com/401593576";
 
@@ -41,18 +44,35 @@ namespace ASexyExtension
 
         private void Instance_OnLoaded()
         {
-            var writer = new StreamWriter("GameLoaded");
+            /*var writer = new StreamWriter("GameLoaded");
             writer.WriteLine("GameLoaded");
-            writer.Close();
-            var versionInfo = string.Format("[{0}][{1}]{2}{3} by {4}", DateTime.Now.ToString("T"), Id, Name, Version, Author);
+            writer.Close();*/
+            /*var versionInfo = string.Format("[{0}][{1}]{2}{3} by {4}", DateTime.Now.ToString("T"), Id, Name, Version, Author);
             var description = string.Format("    {0}", Description);
             DebugConsole.WriteLine(versionInfo);
-            DebugConsole.WriteLine(description);
+            DebugConsole.WriteLine(description);*/
+        }
+
+        public override void OnSceneChanged(Scene scene)
+        {
+            base.OnSceneChanged(scene);
         }
     }
 
     public class ASexyBehaviour : MonoBehaviour
     {
+        void Start()
+        {
+            var camera = Camera.main;
+            camera.orthographic = false;
+            camera.fieldOfView = 30f;
+            DebugConsole.WriteLine(GameParameters.GamePath);
+            float x = 0;
+            float y = 0;
+            float z = 0;
+            GameCommands.Teleport(new Vector3(x, y, z));
+        }
+
         void OnGUI()
         {
             var rect = Rect.zero;
@@ -80,6 +100,11 @@ namespace ASexyExtension
             if (GUI.Button(rect, "Hide Console"))
             {
                 DebugConsole.Hide();
+            }
+            rect.y += 30f;
+            if (GUI.Button(rect, "Log Line"))
+            {
+                SXDebug.Log("Line");
             }
         }
 
