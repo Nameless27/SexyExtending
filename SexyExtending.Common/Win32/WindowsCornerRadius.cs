@@ -7,9 +7,9 @@ namespace SexyExtending.Win32
 {
     public enum WindowsCornerRadius : int
     {
-        Default, 
-        Zero, 
-        Half, 
-        Full
+        Default,
+        Zero,
+        Full,
+        Half
     }
 }
