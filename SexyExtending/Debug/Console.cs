@@ -36,6 +36,7 @@ namespace SexyExtending.Debug
                 instance.writer = new StreamWriter(Instance.Stream);
                 instance.writer.AutoFlush = true;
                 instance.Title = "Sexy Extending - Console";
+                onCreated?.Invoke(instance);
             }
         }
 
@@ -49,6 +50,7 @@ namespace SexyExtending.Debug
             instance.Writer.Close();
             instance.stream = null;
             instance = null;
+            onDestoryed?.Invoke();
         }
 
         public static void Write(string text)
@@ -111,6 +113,21 @@ namespace SexyExtending.Debug
         internal static Console instance;
         public static Console Instance => instance;
 
+        #region Events
+        internal static event Action<Console> onCreated;
+        public static event Action<Console> OnCreated
+        {
+            add => onCreated += value;
+            remove => onCreated -= value;
+        }
+
+        internal static event Action onDestoryed;
+        public static event Action OnDestoryed
+        {
+            add => onDestoryed += value;
+            remove => onDestoryed -= value;
+        }
+        #endregion
 
         #region P/Invoke
         [DllImport("kernel32.dll", SetLastError = true)]
