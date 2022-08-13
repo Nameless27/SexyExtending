@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Debug\Console.cs" />
     <Compile Include="Debug\Debug.cs" />
+    <Compile Include="Debug\DebugFile.cs" />
     <Compile Include="GameCommands.cs" />
     <Compile Include="GameParameters.cs" />
     <Compile Include="ExtensionsManager.cs" />

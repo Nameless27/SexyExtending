@@ -102,30 +102,80 @@ namespace SexyExtending
         #region LoadAssembly
         public static SexyExtension Load(Assembly assembly)
         {
-            var alltypes = assembly.GetTypes();
-            var maintype = FindType(alltypes, SexyExtension.Type);
-            if (maintype == null) return null;
-            var ins = Activator.CreateInstance(maintype);
-            if (ins == null)
-                return null;
-            var instance = (SexyExtension)ins;
+            try
+            {
+                var alltypes = assembly.GetTypes();
+                var maintype = FindType(alltypes, SexyExtension.Type);
+                if (maintype == null) return null;
+                var ins = Activator.CreateInstance(maintype);
+                if (ins == null)
+                    return null;
+                var instance = (SexyExtension)ins;
 
-            instance.OnExtensionLoaded();
-            return instance;
+                instance.OnExtensionLoaded();
+                if (Debug.Debug.IsDebugEnabled)
+                {
+                    Debug.Debug.Log(string.Format("{0}{1} by {2}"));
+                    Debug.Debug.Log("   -" + instance);
+                    Debug.Debug.Log();
+                }
+                return instance;
+            }
+            catch (Exception ex)
+            {
+                if (Debug.Debug.IsDebugEnabled)
+                {
+                    Debug.Debug.Log(ex.Message);
+                }
+                return null;
+            }
         }
 
         public static IEnumerable<SexyExtension> LoadExtensions(Assembly assembly)
         {
-            var alltypes = assembly.GetTypes();
-            var maintypes = FindTypes(alltypes, SexyExtension.Type);
+            Type[] alltypes;
+            IEnumerable<Type> maintypes;
+            try
+            {
+                alltypes = assembly.GetTypes();
+                maintypes = FindTypes(alltypes, SexyExtension.Type);
+            }
+            catch (Exception ex)
+            {
+                if (Debug.Debug.IsDebugEnabled)
+                {
+                    Debug.Debug.Log(ex.Message);
+                }
+                yield break;
+            }
             foreach (var maintype in maintypes)
             {
-                var ins = Activator.CreateInstance(maintype);
-                if (ins == null)
-                    continue;
-                var instance = (SexyExtension)ins;
+                SexyExtension instance = null;
+                try
+                {
+                    var ins = Activator.CreateInstance(maintype);
+                    if (ins == null)
+                        continue;
+                    instance = (SexyExtension)ins;
 
-                instance.OnExtensionLoaded();
+                    instance.OnExtensionLoaded();
+                    if (Debug.Debug.IsDebugEnabled)
+                    {
+                        Debug.Debug.Log(string.Format("{0}{1} by {2}"));
+                        Debug.Debug.Log("   -" + instance);
+                        Debug.Debug.Log();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (Debug.Debug.IsDebugEnabled)
+                    {
+                        Debug.Debug.Log(ex.Message);
+                    }
+                    yield break;
+                }
+                if (instance == null)
+                    continue;
                 yield return instance;
             }
             yield break;
@@ -148,15 +198,12 @@ namespace SexyExtending
         #endregion
 
         #region LoadSexyExtending
-        public static void LoadSexyExtending()
+        public static void LoadSexyExtending(bool debug = false)
         {
             SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
             SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
             var active = SceneManager.GetActiveScene();
-            Debug.Debug.Initialize();
-            isDebugEnabled = PlayerPrefs.GetInt("SX_DEBUG", 0) != 0;
-            if (isDebugEnabled)
-                IsDebugEnabled = true;
+            Debug.Debug.IsDebugEnabled = debug;
             SceneManager_activeSceneChanged(active, active);
         }
 
@@ -191,21 +238,6 @@ namespace SexyExtending
                 extension.OnSceneChanged(arg1);
             }
         }
-
-        private static bool isDebugEnabled;
-
-        public static bool IsDebugEnabled
-        {
-            get => isDebugEnabled;
-            set
-            {
-                isDebugEnabled = value;
-                PlayerPrefs.SetInt("SX_DEBUG", value ? 1 : 0);
-                OnDebugEnableChanged(value);
-            }
-        }
-
-        internal static Action<bool> OnDebugEnableChanged;
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -19,6 +20,13 @@ namespace SexyExtending
         public const string MIAN_NAME = "Mian";
         public const string CREDITS_NAME = "Credits";
         public const string REWARDLOADER_NAME = "Reward Loader";
+
+        static GameParameters()
+        {
+            var hasExe = Directory.EnumerateFiles(gamePath).Where(f => f.EndsWith("GettingOverIt.exe")).Count() > 0;
+            var hasDll = File.Exists(assemblyCSharp);
+            valid = hasExe && hasDll;
+        }
 
         internal static GameObject player;
         public static GameObject Player => player;
@@ -41,5 +49,16 @@ namespace SexyExtending
 
         internal static Scene currentScene;
         public static Scene CurrentScene => currentScene;
+
+
+        internal static bool valid = true;
+        public static bool Invalid => !valid;
+        public static bool Valid => valid;
+
+        internal static string gamePath = Directory.GetCurrentDirectory() + "\\";
+        public static string GamePath => gamePath;
+
+        internal static string assemblyCSharp = string.Format("{0}GettingOverIt_Data\\Managed\\Assembly-CSharp.dll", gamePath);
+        public static string AssemblyCSharp => assemblyCSharp;
     }
 }
