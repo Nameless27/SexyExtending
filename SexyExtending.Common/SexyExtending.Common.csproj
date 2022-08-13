@@ -66,6 +66,8 @@
     <Compile Include="Win32\ColorConverter.cs" />
     <Compile Include="Win32\DWMWINDOWATTRIBUTE.cs" />
     <Compile Include="Win32\DWM_SYSTEMBACKDROP_TYPE.cs" />
+    <Compile Include="Win32\HookProc.cs" />
+    <Compile Include="Win32\HookType.cs" />
     <Compile Include="Win32\MARGINS.cs" />
     <Compile Include="Win32\POINT.cs" />
     <Compile Include="Win32\RECT.cs" />

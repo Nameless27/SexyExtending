@@ -30,6 +30,19 @@ namespace SexyExtending
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr SetFocus(IntPtr hWnd);
+
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr SetWindowsHookEx(HookType hookType, HookProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr SetActiveWindow(IntPtr hWnd);
 
         internal class Dwm
         {
