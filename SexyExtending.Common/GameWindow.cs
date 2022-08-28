@@ -9,7 +9,6 @@ using System.Text;
 using UnityEngine;
 using static SexyExtending.PInvoke;
 using Drawing = System.Drawing;
-using DebugConsole = SexyExtending.Debug.Console;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -24,30 +23,6 @@ namespace SexyExtending
             EnumWindows(FindGameWindowProc, IntPtr.Zero);
             Dwm = new DwmApi();
             Dwm.handle = handle;
-            DebugConsole.OnCreated -= DebugConsole_OnCreated;
-            DebugConsole.OnCreated += DebugConsole_OnCreated;
-        }
-
-        private void DebugConsole_OnCreated(DebugConsole console)
-        {
-            SetWindowsHookEx(
-                HookType.WH_GETMESSAGE, 
-                ConsoleWindowMessage,
-                console.Hwnd, 
-                (uint)GameProcess.Instance.PID);
-        }
-
-        private IntPtr ConsoleWindowMessage(int code, IntPtr wParam, IntPtr lParam)
-        {
-            switch (code)
-            {
-                case 0x0006:
-                    Focus();
-                    break;
-                default:
-                    break;
-            }
-            return IntPtr.Zero;
         }
 
         internal IntPtr handle = IntPtr.Zero;
@@ -57,9 +32,27 @@ namespace SexyExtending
             SetFocus(handle);
         }
 
-        public void Active()
+        public void SetActive()
         {
-            
+            WindowActive.SetActive(handle);
+        }
+
+        public void SetActive(bool active)
+        {
+            if (active)
+                WindowActive.ActivateWindow(handle);
+            else
+                WindowActive.DeactivateWindow(handle);
+        }
+
+        public void Activate()
+        {
+            WindowActive.ActivateWindow(handle);
+        }
+
+        public void Deactivate()
+        {
+            WindowActive.DeactivateWindow(handle);
         }
 
         #region WindowPosition

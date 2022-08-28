@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Getting Over It\GettingOverIt_Data\Managed\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,9 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Debug\Console.cs" />
-    <Compile Include="Debug\Debug.cs" />
-    <Compile Include="Debug\DebugFile.cs" />
+    <Compile Include="Components\CustomComponent.cs" />
+    <Compile Include="Components\CustomComponentsManager.cs" />
+    <Compile Include="ExDebug\ConsoleEx.cs" />
+    <Compile Include="ExDebug\DebugEx.cs" />
+    <Compile Include="ExDebug\DebugFile.cs" />
+    <Compile Include="ExDebug\DebugListener.cs" />
     <Compile Include="GameCommands.cs" />
     <Compile Include="GameParameters.cs" />
     <Compile Include="ExtensionsManager.cs" />

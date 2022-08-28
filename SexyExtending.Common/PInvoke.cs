@@ -40,10 +40,10 @@ namespace SexyExtending
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
+        [DllImport("user32.dll")]
+        internal static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern IntPtr SetActiveWindow(IntPtr hWnd);
-
+        #region DwmApi
         internal class Dwm
         {
             [DllImport("dwmapi.dll", PreserveSig = true)]
@@ -63,6 +63,8 @@ namespace SexyExtending
 
             internal static unsafe int DwmGetWindowAttributeInternal(IntPtr hwnd, DwmWindowAttribute attribute, ref int value)
             {
+                if (hwnd == IntPtr.Zero)
+                    return 0;
                 fixed (void* pointer = &value)
                 {
                     var result = DwmGetWindowAttribute(hwnd, attribute, pointer, sizeof(int));
@@ -73,6 +75,8 @@ namespace SexyExtending
             internal static int DwmGetWindowAttribute(IntPtr hwnd, DwmWindowAttribute attribute, out int value)
             {
                 value = 0;
+                if (hwnd == IntPtr.Zero)
+                    return 0;
                 return DwmGetWindowAttributeInternal(hwnd, attribute, ref value);
             }
 
@@ -82,7 +86,9 @@ namespace SexyExtending
             [DllImport("user32.dll")]
             internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
         }
+        #endregion
 
+        #region ShowWindow
         internal class WindowVisible
         {
             [DllImport("user32.dll")]
@@ -90,11 +96,15 @@ namespace SexyExtending
 
             internal static void ShowWindow(IntPtr hwnd)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 ShowWindow(hwnd, SW_SHOW);
             }
 
             internal static void HideWindow(IntPtr hwnd)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 ShowWindow(hwnd, SW_HIDE);
             }
 
@@ -167,7 +177,9 @@ namespace SexyExtending
             /// </summary>
             internal const int SW_FORCEMINIMIZE = 11;
         }
+        #endregion
 
+        #region WindowPlacement
         internal class WindowPosition
         {
             [DllImport("user32.dll", SetLastError = true)]
@@ -188,6 +200,8 @@ namespace SexyExtending
             {
                 x = 0;
                 y = 0;
+                if (hwnd == IntPtr.Zero)
+                    return;
                 if (GetWindowRect(hwnd, out var rect))
                 {
                     x = rect.Left;
@@ -199,6 +213,8 @@ namespace SexyExtending
             {
                 width = 0;
                 height = 0;
+                if (hwnd == IntPtr.Zero)
+                    return;
                 if (GetWindowRect(hwnd, out var rect))
                 {
                     width = rect.Width;
@@ -216,9 +232,11 @@ namespace SexyExtending
             #region Position
             internal static void GetMaximizedPosition(IntPtr hwnd, out int x, out int y)
             {
-                var placement = empty;
                 x = 0;
                 y = 0;
+                if (hwnd == IntPtr.Zero)
+                    return;
+                var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
                     x = placement.MaxPosition.X;
@@ -228,9 +246,11 @@ namespace SexyExtending
 
             internal static void GetNormalPosition(IntPtr hwnd, out int x, out int y)
             {
-                var placement = empty;
                 x = 0;
                 y = 0;
+                if (hwnd == IntPtr.Zero)
+                    return;
+                var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
                     x = placement.NormalPosition.X;
@@ -240,9 +260,11 @@ namespace SexyExtending
 
             internal static void GetMinimizedPosition(IntPtr hwnd, out int x, out int y)
             {
-                var placement = empty;
                 x = 0;
                 y = 0;
+                if (hwnd == IntPtr.Zero)
+                    return;
+                var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
                     x = placement.MinPosition.X;
@@ -254,9 +276,11 @@ namespace SexyExtending
             #region Size
             internal static void GetSize(IntPtr hwnd, out int width, out int height)
             {
-                var placement = empty;
                 width = 0;
                 height = 0;
+                if (hwnd == IntPtr.Zero)
+                    return;
+                var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
                     width = placement.NormalPosition.Width;
@@ -272,6 +296,8 @@ namespace SexyExtending
             #region Position
             internal static void SetMaximizedPosition(IntPtr hwnd, int x, int y)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
@@ -283,6 +309,8 @@ namespace SexyExtending
 
             internal static void SetNormalPosition(IntPtr hwnd, int x, int y)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
@@ -294,6 +322,8 @@ namespace SexyExtending
 
             internal static void SetMinimizedPosition(IntPtr hwnd, int x, int y)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
@@ -307,6 +337,8 @@ namespace SexyExtending
             #region Size
             internal static void SetSize(IntPtr hwnd, int width, int height)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 var placement = empty;
                 if (GetWindowPlacement(hwnd, ref placement))
                 {
@@ -324,12 +356,16 @@ namespace SexyExtending
             #region MoveWindow
             internal static void Move(IntPtr hwnd, int x, int y, bool repaint = false)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 GetRectSize(hwnd, out var width, out var height);
                 MoveWindow(hwnd, x, y, width, height, repaint);
             }
 
             internal static void Resize(IntPtr hwnd, int width, int height, bool repaint = false)
             {
+                if (hwnd == IntPtr.Zero)
+                    return;
                 GetRectPosition(hwnd, out var x, out var y);
                 MoveWindow(hwnd, x, y, width, height, repaint);
             }
@@ -341,5 +377,41 @@ namespace SexyExtending
 
             internal static readonly WINDOWPLACEMENT empty = WINDOWPLACEMENT.Default;
         }
+        #endregion
+
+        #region WindowActive
+        internal class WindowActive
+        {
+            [DllImport("user32.dll", SetLastError = true)]
+            internal static extern IntPtr SetActiveWindow(IntPtr hWnd);
+
+            static readonly IntPtr WA_ACTIVE = new IntPtr(1);
+            static readonly IntPtr WA_INACTIVE = new IntPtr(0);
+
+            const int WM_ACTIVATE = 0x0006;
+
+            internal static void SetActive(IntPtr hwnd)
+            {
+                if (hwnd == IntPtr.Zero)
+                    return;
+                SetActiveWindow(hwnd);
+            }
+
+
+            internal static void ActivateWindow(IntPtr hwnd)
+            {
+                if (hwnd == IntPtr.Zero)
+                    return;
+                SendMessage(hwnd, WM_ACTIVATE, WA_ACTIVE, IntPtr.Zero);
+            }
+
+            internal static void DeactivateWindow(IntPtr hwnd)
+            {
+                if (hwnd == IntPtr.Zero)
+                    return;
+                SendMessage(hwnd, WM_ACTIVATE, WA_INACTIVE, IntPtr.Zero);
+            }
+        }
+        #endregion
     }
 }

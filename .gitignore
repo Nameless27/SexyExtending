@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /Install
 /Extensions/DateTimer
 /SexyExtending.Piper
+/Extensions/SexyExtending.LevelLoader
+/SexyExtending/Components

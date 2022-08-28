@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using ConsoleBase = System.Console;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
-namespace SexyExtending.Debug
+namespace SexyExtending._Debug
 {
-    public sealed class Console
+    public sealed class ConsoleEx
     {
         public static void Show()
         {
@@ -30,7 +31,7 @@ namespace SexyExtending.Debug
                 return;
             if (AllocConsole())
             {
-                instance = new Console();
+                instance = new ConsoleEx();
                 instance.hwnd = GetConsoleWindow();
                 instance.stream = ConsoleBase.OpenStandardOutput();
                 instance.writer = new StreamWriter(Instance.Stream);
@@ -110,12 +111,12 @@ namespace SexyExtending.Debug
             }
         }
 
-        internal static Console instance;
-        public static Console Instance => instance;
+        internal static ConsoleEx instance;
+        public static ConsoleEx Instance => instance;
 
         #region Events
-        internal static event Action<Console> onCreated;
-        public static event Action<Console> OnCreated
+        internal static event Action<ConsoleEx> onCreated;
+        public static event Action<ConsoleEx> OnCreated
         {
             add => onCreated += value;
             remove => onCreated -= value;

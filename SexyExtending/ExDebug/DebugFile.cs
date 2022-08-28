@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SexyExtending.Debug
+namespace SexyExtending._Debug
 {
     public class DebugFile
     {

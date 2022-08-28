@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateTimer", "Extensions\Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyExtending.Piper", "SexyExtending.Piper\SexyExtending.Piper.csproj", "{B734B045-DF3E-446E-BC83-4A85976B1AE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexyExtending.LevelLoader", "Extensions\SexyExtending.LevelLoader\SexyExtending.LevelLoader.csproj", "{B9BD775E-7CFA-415A-A261-8E0990C641E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B734B045-DF3E-446E-BC83-4A85976B1AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9BD775E-7CFA-415A-A261-8E0990C641E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9BD775E-7CFA-415A-A261-8E0990C641E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9BD775E-7CFA-415A-A261-8E0990C641E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9BD775E-7CFA-415A-A261-8E0990C641E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{B9897022-0299-4C8D-8204-B820ADB6F787} = {1E4428B5-6548-4DE4-9893-51DFA67B1E89}
 		{CAE8A7EE-B53D-4396-9AD5-FFDCAF564438} = {1E4428B5-6548-4DE4-9893-51DFA67B1E89}
 		{3C82CE8D-6AFD-4147-9DE4-6B11BC2F9AC7} = {3CFE7DE7-23F4-464B-89CC-8C8A46E84E75}
+		{B9BD775E-7CFA-415A-A261-8E0990C641E6} = {3CFE7DE7-23F4-464B-89CC-8C8A46E84E75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {909A4C97-6E94-44D9-A028-1D89E4FD52BF}

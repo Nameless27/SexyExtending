@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SexyExtending._Debug;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static SexyExtending.GameParameters;
@@ -113,19 +113,22 @@ namespace SexyExtending
                 var instance = (SexyExtension)ins;
 
                 instance.OnExtensionLoaded();
-                if (Debug.Debug.IsDebugEnabled)
+                if (DebugEx.IsDebugEnabled)
                 {
-                    Debug.Debug.Log(string.Format("{0}{1} by {2}"));
-                    Debug.Debug.Log("   -" + instance);
-                    Debug.Debug.Log();
+                    Debug.Log($"[{DateTime.UtcNow}][ExtensionLoaded]{instance.Name}{instance.Version} by {instance.Author}");
+                    foreach (var descriptionLine in instance.Description.Split('\n'))
+                    {
+                        Debug.Log(descriptionLine.PadLeft(4, ' '));
+                    }
+                    Debug.Log("");
                 }
                 return instance;
             }
             catch (Exception ex)
             {
-                if (Debug.Debug.IsDebugEnabled)
+                if (DebugEx.IsDebugEnabled)
                 {
-                    Debug.Debug.Log(ex.Message);
+                    Debug.Log(ex.Message);
                 }
                 return null;
             }
@@ -142,9 +145,9 @@ namespace SexyExtending
             }
             catch (Exception ex)
             {
-                if (Debug.Debug.IsDebugEnabled)
+                if (DebugEx.IsDebugEnabled)
                 {
-                    Debug.Debug.Log(ex.Message);
+                    Debug.Log(ex.Message);
                 }
                 yield break;
             }
@@ -159,18 +162,21 @@ namespace SexyExtending
                     instance = (SexyExtension)ins;
 
                     instance.OnExtensionLoaded();
-                    if (Debug.Debug.IsDebugEnabled)
+                    if (DebugEx.IsDebugEnabled)
                     {
-                        Debug.Debug.Log(string.Format("{0}{1} by {2}"));
-                        Debug.Debug.Log("   -" + instance);
-                        Debug.Debug.Log();
+                        Debug.Log($"[{DateTime.UtcNow}][ExtensionLoaded]{instance.Name}{instance.Version} by {instance.Author}");
+                        foreach (var descriptionLine in instance.Description.Split('\n'))
+                        {
+                            Debug.Log(descriptionLine.PadLeft(4, ' '));
+                        }
+                        Debug.Log("");
                     }
                 }
                 catch (Exception ex)
                 {
-                    if (Debug.Debug.IsDebugEnabled)
+                    if (DebugEx.IsDebugEnabled)
                     {
-                        Debug.Debug.Log(ex.Message);
+                        Debug.Log(ex.Message);
                     }
                     yield break;
                 }
@@ -203,12 +209,17 @@ namespace SexyExtending
             SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
             SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
             var active = SceneManager.GetActiveScene();
-            Debug.Debug.IsDebugEnabled = debug;
+            DebugEx.IsDebugEnabled = debug;
             SceneManager_activeSceneChanged(active, active);
+            
         }
 
         private static void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
+            if (DebugEx.IsDebugEnabled)
+            {
+                DebugListener.AddEvent();
+            }
             player = GameObject.Find(PLAYER_NAME) ?? player;
             handle = GameObject.Find(HANDLE_NAME) ?? handle;
             hub = GameObject.Find(HUB_NAME) ?? hub;
@@ -237,6 +248,8 @@ namespace SexyExtending
             {
                 extension.OnSceneChanged(arg1);
             }
+            //Debug.Debug.Log($"{DateTime.UtcNow}SceneChanged:{arg1.name}");
+            Debug.Log($"SceneChanged:{arg1.name}");
         }
         #endregion
     }

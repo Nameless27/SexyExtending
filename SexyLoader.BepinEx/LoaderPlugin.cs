@@ -5,8 +5,7 @@ using System.Linq;
 using BepInEx;
 using UnityEngine;
 using SexyExtending;
-using SexyExtending.Debug;
-using ExConsole = SexyExtending.Debug.Console;
+using SexyExtending._Debug;
 using System.Reflection;
 
 namespace SexyLoader.BepinEx
@@ -25,9 +24,9 @@ namespace SexyLoader.BepinEx
                 var args = Environment.GetCommandLineArgs();
                 var debug = args.Where(a => a.ToLower() == "debug");
                 if (debug.Count() > 0)
-                    SexyExtending.Debug.Debug.IsDebugEnabled = true;
+                    DebugEx.IsDebugEnabled = true;
                 else
-                    SexyExtending.Debug.Debug.IsDebugEnabled = false;
+                    DebugEx.IsDebugEnabled = false;
             }
         }
 
