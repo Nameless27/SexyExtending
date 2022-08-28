@@ -8,10 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Drawing = System.Drawing;
-using DebugConsole = SexyExtending.Debug.Console;
-using SXDebug = SexyExtending.Debug.Debug;
 using UnityEngine.SceneManagement;
 using System.Reflection;
+using SexyExtending.ExDebug;
 
 namespace ASexyExtension
 {
@@ -66,7 +65,7 @@ namespace ASexyExtension
             var camera = Camera.main;
             camera.orthographic = false;
             camera.fieldOfView = 30f;
-            DebugConsole.WriteLine(GameParameters.GamePath);
+            Debug.Log(GameParameters.GamePath);
             float x = 0;
             float y = 0;
             float z = 0;
@@ -84,27 +83,27 @@ namespace ASexyExtension
             rect.Set(0f, 20f, 125f, 25f);
             if (GUI.Button(rect, "Create Console"))
             {
-                DebugConsole.Create();
+                ConsoleEx.Create();
             }
             rect.y += 30f;
             if (GUI.Button(rect, "Close Console"))
             {
-                DebugConsole.Destory();
+                ConsoleEx.Destory();
             }
             rect.y += 30f;
             if (GUI.Button(rect, "Show Console"))
             {
-                DebugConsole.Show();
+                ConsoleEx.Show();
             }
             rect.y += 30f;
             if (GUI.Button(rect, "Hide Console"))
             {
-                DebugConsole.Hide();
+                ConsoleEx.Hide();
             }
             rect.y += 30f;
             if (GUI.Button(rect, "Log Line"))
             {
-                SXDebug.Log("Line");
+                Debug.Log("Line");
             }
         }
 

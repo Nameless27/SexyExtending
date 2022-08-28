@@ -7,7 +7,7 @@ using ConsoleBase = System.Console;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace SexyExtending._Debug
+namespace SexyExtending.ExDebug
 {
     public sealed class ConsoleEx
     {

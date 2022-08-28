@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace SexyExtending._Debug
+namespace SexyExtending.ExDebug
 {
     public class DebugEx
     {
