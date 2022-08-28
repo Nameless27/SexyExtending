@@ -5,8 +5,8 @@ using System.Linq;
 using BepInEx;
 using UnityEngine;
 using SexyExtending;
-using SexyExtending._Debug;
 using System.Reflection;
+using SexyExtending.ExDebug;
 
 namespace SexyLoader.BepinEx
 {
